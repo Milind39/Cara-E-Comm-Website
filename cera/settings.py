@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-@jujzot%=2i%yqvk$mz#ozk1=wg$ee6sugup&vqf1%lgm&z*74
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['carastore.onrender.com']
+ALLOWED_HOSTS = ['carastore-u349.onrender.com']
 
 
 # Application definition

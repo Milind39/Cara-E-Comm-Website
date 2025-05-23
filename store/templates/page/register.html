@@ -1,0 +1,199 @@
+{% extends 'page/common.html' %}
+{% load static %}
+{% block content %}
+<head>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+    
+    .signup-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    }
+    
+    h2 {
+      text-align: center;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      margin-top: 8px;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 10px 1px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    .input-group select {
+      width: 100%;
+      padding: 10px 1px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #088178;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    .login-link span ,a {
+      color: #088178;
+      text-decoration: none;
+    }
+  </style>
+   <style>
+    .valid {
+        color: green;
+    }
+    .invalid {
+        color: red;
+    }
+    .reset {
+        color: white;
+    }
+</style>
+</head>
+
+<body>
+  <div class="messages">
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+  </div>
+  <div class="signup-container">
+    <h2>Create Your Cera Account</h2>
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
+      <div class="input-group">
+          <input type="text" id="id_username" name="username" placeholder="  Enter User Name" required>
+      </div>
+      <div class="input-group">
+          <input type="text" id="id_first_name" name="first_name" placeholder="  Enter First Name" required>
+      </div>
+     <div class="input-group">
+          <input type="text" id="id_last_name" name="last_name" placeholder="  Enter Last Name" required>
+      </div>
+      <div class="input-group">
+          <input type="email" id="id_email" name="email" placeholder="  Enter Email Address" required>
+      </div>
+      <div class="input-group">
+          <input type="password" id="id_password1" name="password1" placeholder="  Enter Password" required>
+      </div>
+      <div class="input-group">
+          <input type="password" id="id_password2" name="password2" placeholder="  Confirm Password" required>
+      </div>
+      <div id="password-help-text" class="form-text text-muted small">
+          <ul>
+              <li id="password-length">Your password must contain at least 8 characters.</li>
+              <li id="password-characters">Your password can't be entirely numeric.</li>
+              <li id="password-similarity">Your password can't be too similar to your other personal information.</li>
+              <li id="password-common">Your password can't be a commonly used password.</li>
+              <li id="password-match">Passwords must match.</li>
+          </ul>
+      </div>
+      <button type="submit" >Register</button>
+  </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var passwordInput = document.getElementById('id_password1');
+  var confirmPasswordInput = document.getElementById('id_password2');
+  var passwordLength = document.getElementById('password-length');
+  var passwordCharacters = document.getElementById('password-characters');
+  var passwordSimilarity = document.getElementById('password-similarity');
+  var passwordCommon = document.getElementById('password-common');
+  var passwordMatch = document.getElementById('password-match');
+
+  var userNameInput = document.getElementById('id_username');
+
+  function validatePassword() {
+      var password = passwordInput.value;
+      var confirmPassword = confirmPasswordInput.value;
+
+      if (password === '') {
+          passwordLength.className = 'reset';
+          passwordCharacters.className = 'reset';
+          passwordSimilarity.className = 'reset';
+          passwordCommon.className = 'reset';
+          passwordMatch.className = 'reset';
+          return;
+      }
+
+      // Check length
+      if (password.length >= 8) {
+          passwordLength.className = 'valid';
+      } else {
+          passwordLength.className = 'invalid';
+      }
+
+      // Check if not entirely numeric
+      if (!/^\d+$/.test(password)) {
+          passwordCharacters.className = 'valid';
+      } else {
+          passwordCharacters.className = 'invalid';
+      }
+
+      // Check similarity to username (you may expand this to other fields)
+      if (userNameInput && !password.includes(userNameInput.value)) {
+          passwordSimilarity.className = 'valid';
+      } else {
+          passwordSimilarity.className = 'invalid';
+      }
+
+      // Check if not a commonly used password (this is a simple check, you might want to use a more comprehensive list)
+      var commonPasswords = ['password', '123456', '123456789', '12345678', '12345', '1234567', '1234567890', 'qwerty', 'abcdef', 'letmein'];
+      if (!commonPasswords.includes(password)) {
+          passwordCommon.className = 'valid';
+      } else {
+          passwordCommon.className = 'invalid';
+      }
+
+      // Check if passwords match
+      if (password === confirmPassword) {
+          passwordMatch.className = 'valid';
+      } else {
+          passwordMatch.className = 'invalid';
+      }
+  }
+
+  passwordInput.addEventListener('input', validatePassword);
+  confirmPasswordInput.addEventListener('input', validatePassword);
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+<script src="{% static 'js/csrf.js' %}"></script> <!-- Include your custom JS file -->
+</body>
+{% endblock content %}
+</html>

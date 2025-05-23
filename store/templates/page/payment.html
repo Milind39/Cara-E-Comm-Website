@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select a Payment Method</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        h6 {
+            color: #088178;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .payment-option img {
+            margin-right: 10px;
+            width: 40px;
+            height: auto;
+        }
+        .payment-option p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .payment-option input[type="radio"] {
+            margin-right: 15px;
+        }
+        button {
+            width: 100%;
+            background-color: #088178;
+            border-color: #065d58;
+            color: #fff;
+            padding: 10px 0;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        button:hover {
+            background-color: #065d58;
+        }
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select a Payment Method</h1>
+        <form method="POST" action="{% url 'payment_method' %}">
+            {% csrf_token %}
+            <h6>Recommended</h6>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="upi" value="upi_payment">
+                <img src="https://via.placeholder.com/40?text=UPI" alt="UPI">
+                <label for="upi">UPI</label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="other-upi" value="other_upi_payment">
+                <img src="https://via.placeholder.com/40?text=Other%20UPI%20Apps" alt="Other UPI Apps">
+                <label for="other-upi">Google Pay, PhonePe, Paytm, and more</label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="cera-pay" value="cera_pay_payment">
+                <img src="https://via.placeholder.com/40?text=Cera%20Pay%20UPI" alt="Cera Pay UPI">
+                <label for="cera-pay">Add Account to Cera Pay UPI</label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="card" value="card_payment">
+                <img src="https://via.placeholder.com/40?text=Card" alt="Credit and Debit Cards">
+                <label for="card">Add a new credit or debit card</label>
+            </div>
+
+            <h6>More ways to pay</h6>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="cod" value="cod_payment">
+                <img src="https://via.placeholder.com/40?text=Cash" alt="Cash on Delivery">
+                <label for="cod">Pay with cash on delivery</label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="net-banking" value="net_banking_payment">
+                <img src="https://via.placeholder.com/40?text=Net%20Banking" alt="Net Banking">
+                <label for="net-banking">Net banking</label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="wallets" value="wallet_payment">
+                <img src="https://via.placeholder.com/40?text=Wallets" alt="Wallets">
+                <label for="wallets">Pay with wallets</label>
+            </div>
+
+            <div class="payment-option">
+                <input type="radio" name="payment" id="gift-card" value="gift_card_payment">
+                <img src="https://via.placeholder.com/40?text=Gift%20Card" alt="Gift Card">
+                <label for="gift-card">Add gift card or promo code</label>
+            </div>
+
+            <button type="submit"><i href="{% url 'payment_method' %}">Continue</i></button>
+        </form>
+    </div>
+
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            // Get all payment option inputs
+            const paymentOptions = document.querySelectorAll('input[name="payment"]');
+            let selectedPayment = '';
+    
+            // Find the selected option
+            paymentOptions.forEach(option => {
+                if (option.checked) {
+                    selectedPayment = option.value;
+                }
+            });
+    
+            // Log the selected option for verification (optional)
+            console.log("Selected Payment Method:", selectedPayment);
+    
+            // Check if a payment option is selected
+            if (!selectedPayment) {
+                alert('Please select a payment method.');
+                event.preventDefault(); // Prevent form submission if no option is selected
+            }
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,112 @@
+{% extends 'page/common.html' %}
+{% load static %}
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clothing Website Login</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+   
+    height: 100vh;
+    background-color: #f2f2f2;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.login-container {
+  background-color: #fff;
+  padding: 20px 20px 15px 15px; /* Increased padding for better spacing */
+  border-radius: 5px;
+  box-sizing: content-box;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+}
+
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px; /* Added margin bottom for better separation */
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px; /* Reduced margin for better spacing */
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; /* Include padding and border in the input's width */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #088178;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Added transition for smoother hover effect */
+}
+
+button:hover {
+    background-color: #07665c; /* Darker color on hover */
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 15px; /* Increased margin top for better separation */
+}
+
+.signup-link a {
+    color: #088178;
+    text-decoration: none;
+}
+
+  
+  </style>
+</head>
+
+<body>
+
+  <div class="login-container">
+   
+    <h2>Login to Your Cera Account</h2>
+    
+    {% if messages %}
+  <div class="messages">
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+          <!-- <div class="alert alert-{{ message.tags }}"> -->
+      {% endfor %}
+  </div>
+{% endif %}
+    <form action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" id="username" name="username" placeholder="  Enter Your Username" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="pass1" name="pass1" placeholder="  Enter Your Password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="signup-link">
+      <a href="{% url 'register' %}">Sign up</a> for a new account.
+    </div>
+  </div>
+</body>
+
+{% endblock %}

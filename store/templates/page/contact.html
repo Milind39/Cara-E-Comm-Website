@@ -1,0 +1,108 @@
+{% extends 'page/common.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+
+
+  <style>
+
+#page-header {
+    background-image: url("{% static 'img/banner/b1 (1).jpg'%}");
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+    #newsletter{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-image: url("{% static 'img/banner/b14.jpg' %}");
+    background-repeat: no-repeat;
+    background-position: 20% 30%;
+    background-color: #041e42;
+}
+
+  </style>
+</head>
+<body>
+
+  <section id="page-header" class="about-header">
+    <h2>#lets_talk</h2>
+    <p>LEAVE A MESSAGE.We love to hear from you!</p>
+  </section>
+
+  <section id="contact-details" class="section-p1">
+    <div class="details">
+        <span>GET IN TOUCH</span>
+        <h2>Visit ne of our offline store or contact us today.</h2>
+        <h3>Head Office</h3>
+        <div>
+            <li>
+                <i class="fal fa-map"></i>
+                <p>354 Abhinandan Glassgow 1UL Ghandhinagar Gujarat</p>
+            </li>
+            <li>
+                <i class="far fa-envelope"></i>
+                <p>contact@example</p>
+            </li>
+            <li>
+                <i class="fas fa-phone-alt"></i>
+                <p>contact@example</p>
+            </li>
+            <li>
+                <i class="far fa-clock"></i>
+                <p>Monday to Saturday 9 .00am to 16.pm</p>
+            </li>
+        </div>
+    </div>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11207\
+        .286037512235!2d72.63257669760961!3d23.217674565870567!2m3!1f0!2f0!3f0!3m2!1
+        i1024!2i768!4f13.1!3m3!1m2!1s0x395c2b987c6d6809%3A0xf86f06a7873e0391!2sGandhi
+        nagar%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1711974467252!5m2!1sen!2sin" width="600" 
+        height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <section id="form-details">
+    <form action="" method="post">
+      {% csrf_token %}
+        <span>LEAVE A MESSAGE</span>
+        <h2>We Love To Hear From You</h2>
+        <input type="text" placeholder="Your Name">
+        <input type="text" placeholder="E-mail">
+        <input type="text" placeholder="Subject">
+        <textarea name="" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+        <button class="normal">Submit</button>
+    </form>
+    <div class="people">
+      <div>
+        <img src="{% static ''%}" alt="">
+        <p><span>Milind Pawar</span>Senior markating manager <br> Phone: +123 875 4990
+        <br> Email: milindpawar3903@gmail.com</p>
+      </div>
+      <div>
+        <img src="{% static ''%}" alt="">
+        <p><span>Daksh Dhupar</span>Senior markating manager <br> Phone: +674 345 7824
+        <br> Email: Dakshdhupa12@gmail.com</p>
+      </div>
+      <div>
+        <img src="{% static ''%}" alt="">
+        <p><span>Sagar Sonar</span>Senior markating manager <br> Phone: +667 876 2346
+        <br> Email: sagarsonar2456@gmail.com</p>
+      </div>
+    </div>
+  </section>
+
+
+</body>
+
+{% endblock %}
+</html>

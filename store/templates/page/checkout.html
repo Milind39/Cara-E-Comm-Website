@@ -1,0 +1,250 @@
+{% extends 'page/common.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <style>
+   #page-header{
+    background-image: url("{% static 'img/about/banner.png' %}");
+}
+#page-header {
+    background-image: url("{% static 'img/about/banner.png'%}");
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+
+/* Checkout css */
+.checkout-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.back-to-cart {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #088178;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+}
+
+.checkout-form .form-group {
+    margin-bottom: 20px;
+}
+
+.checkout-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.checkout-form textarea {
+    resize: none;
+}
+
+.order-summary {
+    margin: 30px 0;
+    padding: 15px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.order-summary h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.product-image img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-name {
+    display: block;
+    font-weight: bold;
+    color: #333;
+}
+
+.product-quantity {
+    color: #555;
+}
+
+.product-price {
+    font-weight: bold;
+    color: #333;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #088178;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+button i {
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #088178;
+}
+
+
+</style>
+</head>
+<body>
+
+  <section id="page-header" class="about-header">
+    <h2>#lets_shop</h2>
+    <p>Enjoy the modern way of FASHION & SHOPPING!</p>
+  </section>
+  <div class="checkout-container">
+    <a href="/cart" class="back-to-cart">← Back to Cart</a>
+    <h2>Checkout</h2>
+
+    <form class="checkout-form" method="POST" action="{% url 'payment' %}">
+        {% csrf_token %}
+        <!-- User Details -->
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="address">Shipping Address</label>
+            <textarea id="address" name="address" rows="2" required></textarea>
+        </div>
+    
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="postal-code">Postal Code</label>
+            <input type="text" id="postal-code" name="postal-code" required>
+        </div>
+    
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            {% for item in items %}
+            <div class="summary-item">
+                <div class="product-image">
+                    <img src="{{item.product.imageURL}}" alt="Image">
+                </div>
+                <div class="product-details">
+                    <span class="product-name">{{item.product.name}}</span>
+                    <span class="product-quantity">{{item.quantity}}</span>
+                </div>
+                <span class="product-price">{{item.product.price|floatformat:2}}</span>
+            </div>
+            {% endfor %}
+            <div class="summary-total">
+                <span>Total Items: {{order.get_cart_items}}</span>
+                <span>Total Price: Rs {{order.get_cart_total|floatformat:2}}</span>
+            </div>
+        </div>
+    
+        <!-- Checkout Button -->
+        <button type="submit"><i href="{% url 'payment' %}">Place Order</i></button>
+    </form>
+    
+</div>
+
+<script type="text/javascript" >
+    var form = document.getElementById("checkout-form");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        console.log("order Placed Successfully!");
+        document.getElementById("checkout-button").classList.add("hidden");
+        document.getElementById("payment-button").classList.remove("hidden");
+    });
+</script>
+
+
+
+  {% endblock %}

@@ -1,0 +1,220 @@
+{% extends 'page/common.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <style>
+   #page-header{
+    background-image: url("{% static 'img/about/banner.png' %}");
+}
+#page-header {
+    background-image: url("{% static 'img/about/banner.png'%}");
+    width: 100%;
+    height: 40vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 14px;
+}
+.box-element {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    
+}
+
+.cart_row {
+    display: flex;
+    justify-content: space-between;
+  
+    border-bottom: 1px solid #ddd;
+    background-color: #f1f1f1;
+}
+
+.cart_row.header {
+    background-color: #ececec;
+    border-bottom: 2px solid #ddd;
+}
+
+.cart-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    position: relative;
+}
+
+
+.cart_row div,
+.cart-row div {
+    max-width: 150px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+}
+
+.cart-row div:last-child {
+    border-right: none;
+}
+
+.row-image {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-control button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    border-radius: 3px;
+}
+
+.quantity-control button:hover {
+    background-color: #e1e1e1;
+}
+
+.quantity-control .quantity {
+    margin: 0 10px;
+    font-size: 1.1rem;
+}
+
+.cart_row strong {
+    font-size: 1.1rem;
+}
+
+.cart-row:last-child {
+    border-bottom: none;
+}
+
+.checkout-table {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.checkout-summary:last-child {
+    margin-bottom: 0;
+}
+
+.checkout-summary span {
+    display: inline-block;
+    font-weight: bold;
+    color: #333;
+}
+
+.checkout-button {
+    margin-left: auto;
+    padding: 10px 20px;
+    background-color: #088178;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.chg-quantity.update-cart {
+    width: 20px;  /* Adjust the width as needed */
+    height: 20px; /* Adjust the height as needed */
+    cursor: pointer;
+}
+
+/* Optional: To maintain aspect ratio */
+.chg-quantity.update-cart {
+    width: 20px;
+    height: auto; /* This will adjust the height automatically based on the width */
+    max-height: 20px; /* Set a maximum height if needed */
+}
+
+
+  </style>
+</head>
+<body>
+
+  <section id="page-header" class="about-header">
+    <h2>#lets_shop</h2>
+    <p>Enjoy the modern way of FASHION & SHOPPING!</p>
+  </section>
+
+  <div class="box-element">
+    <div class="cart_row">
+        <div style="flex: 1;"></div>
+        <div style="flex: 2;"><strong>Item</strong></div>
+        <!-- <div style="flex: 1;"><strong>Size</strong></div> -->
+        <div style="flex: 1;"><strong>Price</strong></div>
+        <div style="flex: 1;"><strong>Quantity</strong></div>
+        <div style="flex: 2;"><strong>Total</strong></div>
+    </div>
+
+    {% for item in items %}
+    <div class="cart-row">
+        <div style="flex: 2;"><img class="row-image" src="{{item.product.imageURL}}" alt="Image"></div>
+        <div style="flex: 2;">{{item.product.name}}</div>
+        <!-- <div style="flex: 2;">{{item.product.size}}</div> -->
+        <div style="flex: 1;">{{item.product.price|floatformat:2}}</div>
+        <div style="flex: 1;">
+            <p class="quantity">{{item.quantity}}</p>
+            <div class="quantity">
+                <img class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="add" src="{% static 'img/au.png' %}"></img>
+
+                <img class="chg-quantity update-cart" data-product="{{item.product.id}}" data-action="remove" src="{% static 'img/ad.png' %}"></img>
+            </div>
+        </div>
+        <div style="flex: 1;">Rs {{item.get_total}}</div>
+    </div>
+    {% endfor %}
+
+    <div class="checkout-table">
+      <div class="checkout-summary">
+          <span>Total Items: {{order.get_cart_items}}</span>
+      </div>
+      <div class="checkout-summary">
+          <span>Total Price: Rs {{order.get_cart_total|floatformat:2}}</span>
+          <a class="checkout-button" href="{% url 'checkout' %}">Proceed to Checkout</a>
+      </div>
+  </div>
+  
+  
+</div>
+
+     {% endblock %}
+
+
+
+ 

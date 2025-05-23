@@ -1,0 +1,78 @@
+{% extends 'page/common.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img src="{{ product.imageURL }}" width="100%" id="MainImg" alt="">
+
+            <div class="small-img-group">
+              <div class="small-img-col">
+                <img src="{{ product.imageURL }}" width="100%" class="small-img" alt="">
+              </div>
+              <div class="small-img-col">
+                <img src="{{ product.imageURL }}" width="100%" class="small-img" alt="">
+              </div>
+              <div class="small-img-col">
+                <img src="{{ product.imageURL }}" width="100%" class="small-img" alt="">
+              </div>
+              <div class="small-img-col">
+                <img src="{{ product.imageURL }}" width="100%" class="small-img" alt="">
+              </div>
+            </div>    
+        </div>
+
+        <div class="single-pro-details">
+           <h6>Home / T-Shirts</h6>
+           <h4>{{ product.name }}</h4>
+           <h2>{{ product.price }}</h2>
+           <div class=""><h5>Size:</h5></div>
+           <select name="" id="">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>XXL</option>
+           </select>
+           <div class=""><h5>Quantity:</h5></div>
+           <select name="" id="qty-cart">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+           </select>
+           {% if user.is_authenticated %}
+           <button data-product={{ product.id }} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+           {% else %}
+           <button class="btn btn-outline-secondary add-btn update-cart"><a style="text-decoration: none; color: white;" href="{% url 'login' %}"> Add to Cart</a> </button>
+           {% endif %}
+           <h4>Product Details</h4>
+           <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et eligendi sequi quo culpa veniam aspernatur accusamus est quae!</span>
+        </div>
+    </section>  
+
+  <script>
+    var MainImg = document.getElementById("MainImg");
+    var smallimg = document.getElementsByClassName("small-img");
+
+    smallimg[0].onclick = function(){
+      MainImg.src = smallimg[0].src;
+    }
+    smallimg[1].onclick = function(){
+      MainImg.src = smallimg[1].src;
+    }
+    smallimg[2].onclick = function(){
+      MainImg.src = smallimg[2].src;
+    }
+    smallimg[3].onclick = function(){
+      MainImg.src = smallimg[3].src;
+    }
+  </script> 
+</body>
+{% endblock %}

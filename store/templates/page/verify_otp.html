@@ -1,0 +1,81 @@
+{% extends 'page/common.html' %}
+{% block content %}
+<head>
+    <style>
+         body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+    
+    .signup-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    }
+    
+        h2 {
+      text-align: center;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      margin-top: 8px;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 10px 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    .input-group select {
+      width: 80%;
+      padding: 10px 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #088178;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+<div class="signup-container">
+   <!-- display message for any login errors -->
+   {% if messages %}
+   <div class="messages">
+       {% for message in messages %}
+       <div class="alert alert-warning alert-dismissible fade show" role="alert">
+         <strong>{{ message }}</strong>
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       </div>
+       {% endfor %}
+   </div>
+ {% endif %}
+    <h2>Verify Your Email Address</h2>
+    <form method="POST" action="{% url 'verify_otp' %}">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" id="id_otp" name="otp" placeholder="Enter OTP" required>
+        </div>
+        <button type="submit">Verify OTP</button>
+    </form>
+</div>
+</body>
+{% endblock content %}

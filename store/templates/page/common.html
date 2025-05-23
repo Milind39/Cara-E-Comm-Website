@@ -1,0 +1,137 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cera</title>
+  <link rel="icon" type="image" href="/static/img/favicon.ico">
+  <script src="https://kit.fontawesome.com/f7ccca177b.js"></script>
+  <link rel="stylesheet" href="http://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  
+  <style>
+
+    
+#newsletter{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-image: url("{% static 'img/banner/b14.png' %}");
+    background-repeat: no-repeat;
+    background-position: 20% 30%;
+    background-color: #041e42;
+}
+  </style>
+
+<script type="text/javascript">
+  var user = '{{request.user}}'
+
+  function getToken(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+  }
+  return cookieValue;
+}
+var csrftoken = getToken('csrftoken');
+</script>
+</head>
+<body>
+    <section id="header">
+        <a href="#"><img src="{% static 'img/logo.png' %}" class="logo" alt=""></a>
+    
+        {% include 'page/nav.html' %}        
+        {% if mesaages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ messages }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+      </section>
+            
+    {% block content %}
+    {% endblock %}
+<section id="newsletter" class="section-p1 section-m1">
+    <div class="newstext">
+      <h4>Sign Up For Newsletters</h4>
+      <p>Get E-mail updates about our latest shop and <span>special offers.</span></p>
+    </div>
+    <div class="form">
+      <input type="text" placeholder="Your email address">
+      <button class="normal">Sign Up</button>
+    </div>
+  </section>
+
+  <footer class="section-p1">
+    <div class="col">
+      <img src="{% static 'img/logo.png' %}" class="logo" alt="">
+      <h4>Contact</h4>
+      <p><strong>Address:</strong> 10, Bhramaninagar,B/H Visat Petrol Pump,Sabarmati Ahmedabad</p>
+      <p><strong>Phone:</strong>+91 897 9878 873/(079) 966 7879 435</p>
+      <p><strong>Hours:</strong> 10:00 - 18:00, Mon - Sat</p>
+      <div class="follow">
+        <h4>Follow Us</h4>
+        <div class="icon">
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-pinterest-p"></i>
+          <i class="fab fa-youtube"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <h4>About</h4>
+      <a href="#">About Us</a><br>
+      <a href="#">Delivery Information</a><br>
+      <a href="#">Privacy Policy</a><br>
+      <a href="#">Terms & Conditions</a><br>
+      <a href="#">Contact Us</a><br>
+    </div>
+
+    <div class="col">
+      <h4>My Account</h4>
+      <a href="#">Sign In</a><br>
+      <a href="#">View Cart</a><br>
+      <a href="#">My Wishlist</a><br>
+      <a href="#">Track My Orders</a><br>
+      <a href="#">Help</a><br>
+    </div>
+
+    <div class="col install">
+      <h4>Install App</h4>
+      <p>From App Store or Google Play</p>
+      <div class="row">
+        <img src="{% static 'img/pay/app.jpg' %}" alt="">
+        <img src="{% static 'img/pay/play.jpg' %}" alt="">
+      </div>
+      <p>Secured Payment Gateways</p>
+      <img src="{% static 'img/pay/pay.png' %}" alt="">
+    </div>
+
+    <div class="copyright">
+      <p> 2024, all rights reserved</p>
+    </div>
+  </footer>
+  <script src="{% static 'script/script.js' %}"></script>
+  <script src="{% static 'script/cart.js' %}"></script>
+</body>
+</html>

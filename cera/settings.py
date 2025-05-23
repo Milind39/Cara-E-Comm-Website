@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import dj_database_url
 from pathlib import Path
 import os
+
+from django.contrib import staticfiles
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -83,7 +86,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Set to True if you want sessions to e
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://milind:qmo24t6cPA6Mr1lW0cfxcsr3YHMdp6RG@dpg-d0oclcidbo4c73fg40vg-a/cera_1'
+        default='postgresql://user:pass@localhost:5432/cera_1',
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
 
@@ -123,10 +128,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# settings.py
 STATIC_URL = '/static/'
-STATICFILES_DIRS =[
-    os.path.join(BASE_DIR, "staticfiles"),  # Assuming your static files are in a "static" directory in your project root.
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For collectstatic
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Your custom static files
+
+# For Whitenoise (required on Render)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')

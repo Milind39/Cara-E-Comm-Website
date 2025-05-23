@@ -83,7 +83,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Set to True if you want sessions to e
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
+        default=os.environ.get('postgresql://milind:qmo24t6cPA6Mr1lW0cfxcsr3YHMdp6RG@dpg-d0oclcidbo4c73fg40vg-a/cera_1')
     )
 }
 
